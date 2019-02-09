@@ -109,7 +109,7 @@ def reply_random_quote(message):
     author = citations[2*rnum+1]
     response = '"'+content[:len(content)-3]+'"'+ "  -  " + author
     file.close()
-    message.reply(response)
+    message.send(response)
     #TODO : trouver comment send vers general ou random
     #message.send(response, channel_id="town-square", files=None, props=None, pid='')
     
@@ -119,18 +119,29 @@ def reply_every_seconds(message):
     message.reply("Voici une citation : ");
     reply_random_quote(message)
 
+quote_enabled=False
     
-@respond_to('citations-auto', re.IGNORECASE)
-def reply_every_seconds(message):
-    message.reply("Citations activées : une citation par heure");
-    schedule.every(3600).seconds.do(reply_random_quote, message)
+@listen_to('citation-auto', re.IGNORECASE)
+def citation_auto(message):
+    global quote_enabled
+    if(quote_enabled==False):
+        message.reply("Citations activées : une citation toute les 12 heures")
+        schedule.every(12*3600).seconds.do(reply_random_quote, message)
+        quote_enabled=True
+    else:
+        message.reply("Citations désactivées")
+        schedule.clear()
+        quote_enabled=False
+    
 
-
-@respond_to('stop', re.IGNORECASE)
+@listen_to('stop-citation', re.IGNORECASE)
 def cancel_jobs(message):
     schedule.clear()
-    message.reply('Job arrêté')    
+    message.reply('Job arrêté')
+    global quote_enabled
+    quote_enabled=False
 
 if __name__ == "__main__":
+     
     Bot().run()
 
