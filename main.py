@@ -66,7 +66,7 @@ def test(message):
 @listen_to(r'\bphilippe\b', re.IGNORECASE)
 def test(message):
     message.reply("Je sais où tu te caches ! Viens ici que ch'te bute enculé !")
-@listen_to(r'\bmdr\b', re.IGNORECASE)
+@listen_to(r'\bmdlol\b|lolmdr', re.IGNORECASE)
 def test(message):
     message.reply("https://media.tenor.co/images/ba10f07355029341cb0f92f3ac1cec7b/tenor.gif")
 @listen_to(r"\bj'ai pas compris\b", re.IGNORECASE)
@@ -99,7 +99,14 @@ def test(message):
 @listen_to(r'\bracis', re.IGNORECASE)
 def test(message):
     message.reply('Votez Robert ! http://media.rtl.fr/cache/flas3kVAqKIKmrJq5axY-A/795v530-0/online/image/2015/1216/7780882999_robert-menard-lors-d-un-meeting-de-campagne-a-nimes-le-2-decembre.jpg')
+@listen_to(r'deconnant', re.IGNORECASE)
+def test(message):
+    message.reply('http://www-inf.it-sudparis.eu/modules/UX11/conan.png')
+@listen_to(r'déconnant', re.IGNORECASE)
+def test(message):
+    message.reply('http://www-inf.it-sudparis.eu/modules/UX11/conan.png')
 
+    
 def reply_random_quote(message):
     file = open('citations.txt', "r")
     citations = file.readlines()
